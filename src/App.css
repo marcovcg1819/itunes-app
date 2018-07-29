@@ -1,0 +1,38 @@
+.App {
+  background: #000000
+}
+
+.thecard {
+  perspective: 100rem;
+  -moz-perspective: 100rem;
+  position: relative;
+  height: 250px;
+  max-width: 18rem;
+  padding: 100px;
+  margin-bottom: 200px;
+}
+
+.thecard__side {
+  height: 23rem;
+  transition: all .8s;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 110%;
+  backface-visibility: hidden;
+}
+
+.thecard__side--back {
+  -webkit-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+}
+
+.thecard:hover .thecard__side--front {
+  -webkit-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+}
+
+.thecard:hover .thecard__side--back {
+  -webkit-transform: rotateY(0);
+  transform: rotateY(0);
+}
