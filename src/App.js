@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import './App.css'
 
-const API = 'https://itunes.apple.com/us/rss/topalbums/limit=2/json';
+const API = 'https://itunes.apple.com/us/rss/topalbums/limit=100/json';
 
 class App extends Component {
   constructor(props) {
@@ -19,9 +19,8 @@ class App extends Component {
     }
 
   componentDidMount(){
-    console.log(API);
     if(this.state.title === ''){
-    fetch('https://itunes.apple.com/us/rss/topalbums/limit=100/json')
+    fetch(API)
   .then(results => {
     return results.json();
   }).then(data => {
@@ -64,17 +63,18 @@ class App extends Component {
     this.setState({entries: entries});
     this.setState({feed: feed});
     this.setState({uri: uri});
+    this.setState({filteredEntries: entries});
     //console.log("state", this.state.entries);
   })
 }
   }
 
-  handleInputChange(e) {
+  handleInputChange(e) {    
     this.setState({
       title: e.target.value
     });
     //console.log(e.target.value);
-    if(this.state.title !== ''){
+    if(e.target.value !== ''){
       var test =  
       this.state.entries.filter((ent2) => {
         if(ent2['key'].toLowerCase().includes(e.target.value.toLowerCase())){ 
@@ -83,9 +83,8 @@ class App extends Component {
         return false;
       })
       this.setState({entries: test});
-      //this.setState({title: test});
-    }else{
-      this.setState({entries: null});
+    }else if(e.target.value === ''){
+      this.setState({entries: this.state.filteredEntries});
       this.componentDidMount();
     }
   }
