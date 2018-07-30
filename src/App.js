@@ -24,17 +24,18 @@ class App extends Component {
   .then(results => {
     return results.json();
   }).then(data => {
-    let entries = data.feed.entry.map((ent) => {
-     return(       
-  <div key={ent['title']['label']}>
+    let entries = data.feed.entry.map((ent) => {      
+     return(     
+  <div key={ent['title']['label'].toString()+" "+ent['category']['attributes']['term'].toString()}>
+  <div></div>
     <div className="mt-5 mt-lg-0 col-sm-4 col-md-2">
       <div className="thecard">
         <div className="thecard__side thecard__side--front">
           <div className="card border-primary mb-3">
-          <div className="card-header"><p>Title : {ent['title']['label'].substring(0,40)}</p></div>
+          <div className="card-header"><p>Album : {ent['title']['label'].split('-')[0].substring(0,40)}</p></div>
           <div className="card-body text-primary">
             <center><img src={ent['im:image'][2]['label']} alt="some text" width={ent['im:image'][2]['attributes']['height']} height={ent['im:image'][2]['attributes']['height']}/></center>
-            <p>Content Type :{ent['im:contentType']['im:contentType']['attributes']['term']} {ent['im:contentType']['attributes']['term']}</p>
+            <p>Artist :{ent['title']['label'].split('-')[1]}</p>
             <p>Category :{ent['category']['attributes']['term']}</p>
             <p>Price :{ent['im:price']['label']} {ent['im:price']['attributes']['currency']}</p>
           </div>
@@ -100,7 +101,7 @@ class App extends Component {
               className="form-control"
               value={this.state.album}
               onChange={this.handleInputChange}
-              placeholder="Search Album"
+              placeholder="Search by Album, Artist, Category"
               />
           </div>
           <div>      
